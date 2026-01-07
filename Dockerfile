@@ -1,11 +1,24 @@
+# =========================
+# STAGE 1 - BUILD
+# =========================
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+
+# Copia csproj e restaura
+COPY *.csproj ./
+RUN dotnet restore
+
+# Copia o resto
+COPY . .
+RUN dotnet publish -c Release -o /app/publish
+
+# =========================
+# STAGE 2 - LAMBDA RUNTIME
+# =========================
 FROM public.ecr.aws/lambda/dotnet:8
 
-# Copia tudo
 WORKDIR /var/task
-COPY . .
+COPY --from=build /app/publish .
 
-# Publica
-RUN dotnet publish -c Release -o /var/task/publish
-
-# Define o handler
+# Handler
 CMD ["EmailLambda::EmailLambda.Function::Handler"]
