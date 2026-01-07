@@ -5,7 +5,8 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 # Copia csproj e restaura
-COPY *.csproj ./
+COPY  src/Users.Events.Consumer/Users.Events.Consumer.csproj Users.Events.Consumer/
+COPY  src/Users.Events.Contracts/Users.Events.Contracts.csproj Users.Events.Contracts/
 RUN dotnet restore
 
 # Copia o resto
