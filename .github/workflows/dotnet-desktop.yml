@@ -20,7 +20,7 @@ jobs:
         dotnet-version: '9.0.x'
 
     - name: 🔧 Restaurar e compilar solução
-      run: dotnet build Users.Events.Consumer/Users.Events.Consumer.sln  --configuration Release
+      run: dotnet build src\Users.Events.Consumer/Users.Events.Consumer.sln  --configuration Release
 
   push:
     name: 🚀 Docker Build & Push
