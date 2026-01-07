@@ -25,7 +25,6 @@ jobs:
   push:
     name: 🚀 Docker Build & Push
     runs-on: ubuntu-latest
-    needs: test  # depende do job de test
 
     steps:
     - name: 📥 Checkout do código
