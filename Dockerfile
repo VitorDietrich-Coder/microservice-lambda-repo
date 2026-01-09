@@ -4,23 +4,30 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Copia csproj e restaura
-COPY ["src/Users.Events.Consumer/Users.Events.Consumer.csproj", "src/Users.Events.Consumer/"]
-COPY ["src/Users.Events.Contracts/Users.Events.Contracts.csproj", "src/Users.Events.Contracts/"]
+# Copia csproj (cria as pastas corretas)
+COPY src/Users.Events.Consumer/Users.Events.Consumer.csproj Users.Events.Consumer/
+COPY src/Users.Events.Contracts/Users.Events.Contracts.csproj Users.Events.Contracts/
 
-RUN dotnet restore ./src/Users.Events.Consumer/Users.Events.Consumer.csproj
+# Restore (PATH CORRETO)
+RUN dotnet restore Users.Events.Consumer/Users.Events.Consumer.csproj
 
-# Copia o resto
-COPY . .
-RUN dotnet publish -c Release -o /app/publish
+# Copia o restante do código
+COPY src/Users.Events.Consumer/ Users.Events.Consumer/
+COPY src/Users.Events.Contracts/ Users.Events.Contracts/
+
+# Publish EXPLÍCITO do projeto da Lambda
+RUN dotnet publish Users.Events.Consumer/Users.Events.Consumer.csproj \
+    -c Release \
+    -o /app/publish \
+    /p:UseAppHost=false
 
 # =========================
 # STAGE 2 - LAMBDA RUNTIME
 # =========================
 FROM public.ecr.aws/lambda/dotnet:8
-
 WORKDIR /var/task
+
 COPY --from=build /app/publish .
 
-# Handler
-CMD ["EmailLambda::EmailLambda.Function::Handler"]
+# ⚠️ AJUSTE O HANDLER PARA O NOME REAL
+CMD ["Users.Events.Consumer::Users.Events.Consumer.Function::FunctionHandler"]
