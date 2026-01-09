@@ -4,8 +4,6 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# (Opcional) NuGet config
-COPY nuget.config ./
 
 # Copia os csproj (mantendo hierarquia)
 COPY src/Users.Events.Consumer/Users.Events.Consumer.csproj Users.Events.Consumer/
