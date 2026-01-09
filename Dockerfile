@@ -15,7 +15,7 @@ RUN dotnet restore src/Users.Events.Consumer/Users.Events.Consumer.csproj
 COPY src ./src
 
 # Publish (SEM --no-restore)
-WORKDIR /src/Users.Events.Consumer
+WORKDIR /src/Users.Events.Consumer/Users.Events.Consumer.csproj
 RUN dotnet publish \
     -c Release \
     -r linux-x64 \
