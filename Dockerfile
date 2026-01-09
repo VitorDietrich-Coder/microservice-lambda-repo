@@ -15,10 +15,12 @@ RUN dotnet restore src/Users.Events.Consumer/Users.Events.Consumer.csproj
 COPY src ./src
 
 # Publish
-RUN dotnet publish Users.Events.Consumer.csproj \
-    -c $BUILD_CONFIGURATION \
-    -o /app/publish \
-    /p:UseAppHost=false
+RUN dotnet publish src/Users.Events.Consumer/Users.Events.Consumer.csproj \
+    -c Release \
+    -r linux-x64 \
+    --self-contained false \
+    -o /app/publish
+
 
 
 # =========================
