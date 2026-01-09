@@ -27,28 +27,28 @@ public class Function
 
     public async Task Handler(SNSEvent snsEvent, ILambdaContext context)
     {
-        context.Logger.LogInformation($"Processando {snsEvent.Records.Count} registros SNS");
-
-        foreach (var record in snsEvent.Records)
+        try
         {
-            var evt = JsonSerializer.Deserialize<UserCreatedEvent>(record.Sns.Message);
+            context.Logger.LogInformation($"Processando {snsEvent.Records.Count} registros SNS");
 
-            if (evt is null)
+            foreach (var record in snsEvent.Records)
             {
-                context.Logger.LogWarning($"Mensagem SNS nula ou inválida: {record.Sns.Message}");
-                continue;
-            }
+                var evt = JsonSerializer.Deserialize<UserCreatedEvent>(record.Sns.Message);
 
-            try
-            {
+                if (evt is null)
+                {
+                    context.Logger.LogWarning($"Mensagem SNS nula ou inválida: {record.Sns.Message}");
+                    continue;
+                }
                 await _emailService.SendAsync(evt.Email, evt.Name);
                 context.Logger.LogInformation($"Email enviado para {evt.Email}");
+         
             }
-            catch (Exception ex)
-            {
-                context.Logger.LogError($"Erro ao enviar email para {evt.Email}: " + ex);
-      
-            }
+        }
+        catch (Exception ex)
+        {
+            context.Logger.LogError($"Erro ao enviar email para : " + ex);
+
         }
     }
 }
