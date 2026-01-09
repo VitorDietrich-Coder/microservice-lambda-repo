@@ -26,7 +26,7 @@ RUN dotnet publish src/Users.Events.Consumer/Users.Events.Consumer.csproj \
 # =========================
 # STAGE 2 - LAMBDA RUNTIME
 # =========================
-FROM public.ecr.aws/lambda/provided:al2023
+FROM public.ecr.aws/lambda/dotnet:9
 WORKDIR /var/task
 
 COPY --from=build /app/publish .
