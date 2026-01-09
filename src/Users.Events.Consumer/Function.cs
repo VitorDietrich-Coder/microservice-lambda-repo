@@ -9,6 +9,7 @@ using Users.Events.Contracts.Events;
     typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
 
 namespace Users.Events.Consumer;
+
 public class Function
 {
     private readonly EmailService _emailService;
@@ -17,9 +18,7 @@ public class Function
     {
         var services = new ServiceCollection();
 
-        services.AddSingleton<IAmazonSimpleEmailService>(
-            new AmazonSimpleEmailServiceClient());
-
+        services.AddSingleton<IAmazonSimpleEmailService>(new AmazonSimpleEmailServiceClient());
         services.AddSingleton<EmailService>();
 
         var provider = services.BuildServiceProvider();
@@ -28,23 +27,27 @@ public class Function
 
     public async Task Handler(SNSEvent snsEvent, ILambdaContext context)
     {
+        context.Logger.LogInformation($"Processando {snsEvent.Records.Count} registros SNS");
+
         foreach (var record in snsEvent.Records)
         {
-            var evt = JsonSerializer.Deserialize<UserCreatedEvent>(
-                record.Sns.Message);
+            var evt = JsonSerializer.Deserialize<UserCreatedEvent>(record.Sns.Message);
 
             if (evt is null)
+            {
+                context.Logger.LogWarning($"Mensagem SNS nula ou inválida: {record.Sns.Message}");
                 continue;
+            }
 
             try
             {
                 await _emailService.SendAsync(evt.Email, evt.Name);
+                context.Logger.LogInformation($"Email enviado para {evt.Email}");
             }
             catch (Exception ex)
             {
-                context.Logger.LogError(
-                    $"Erro ao enviar email para {evt.Email}: {ex}");
-                throw; 
+                context.Logger.LogError($"Erro ao enviar email para {evt.Email}: " + ex);
+      
             }
         }
     }
