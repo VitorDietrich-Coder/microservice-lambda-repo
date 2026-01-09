@@ -33,7 +33,10 @@ public class Function
 
             foreach (var record in snsEvent.Records)
             {
+                context.Logger.LogWarning($"Antes: {record.Sns.Message}");
+
                 var evt = JsonSerializer.Deserialize<UserCreatedEvent>(record.Sns.Message);
+                context.Logger.LogWarning($"Depois: {record.Sns.Message}");
 
                 if (evt is null)
                 {
