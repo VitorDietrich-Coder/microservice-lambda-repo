@@ -3,13 +3,12 @@ using Amazon.Lambda.SNSEvents;
 using Amazon.SimpleEmail;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json;
-using Users.Events.Consumer;
 using Users.Events.Contracts.Events;
 
 [assembly: LambdaSerializer(
     typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
 
-namespace EmailLambda;
+namespace Users.Events.Consumer;
 public class Function
 {
     private readonly EmailService _emailService;
