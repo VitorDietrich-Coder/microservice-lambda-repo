@@ -14,13 +14,12 @@ RUN dotnet restore src/Users.Events.Consumer/Users.Events.Consumer.csproj
 # Copia o código
 COPY src ./src
 
-# Publish (SEM --no-restore)
-WORKDIR /src/Users.Events.Consumer/Users.Events.Consumer.csproj
-RUN dotnet publish \
-    -c Release \
-    -r linux-x64 \
-    --self-contained false \
-    -o /app/publish
+# Publish
+RUN dotnet publish Users.Events.Consumer.csproj \
+    -c $BUILD_CONFIGURATION \
+    -o /app/publish \
+    /p:UseAppHost=false
+
 
 # =========================
 # STAGE 2 - LAMBDA RUNTIME
