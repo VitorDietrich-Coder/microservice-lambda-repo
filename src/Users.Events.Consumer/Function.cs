@@ -18,7 +18,8 @@ public class Function
     {
         var services = new ServiceCollection();
 
-        services.AddSingleton<IAmazonSimpleEmailService>(new AmazonSimpleEmailServiceClient());
+        services.AddSingleton<IAmazonSimpleEmailService>(new AmazonSimpleEmailServiceClient(Amazon.RegionEndpoint.USEast1)
+ );
         services.AddSingleton<EmailService>();
 
         var provider = services.BuildServiceProvider();

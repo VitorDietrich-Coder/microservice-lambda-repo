@@ -20,24 +20,37 @@ namespace Users.Events.Consumer
 
         public async Task SendAsync(string to, string name)
         {
-            var request = new SendEmailRequest
+            try
             {
-                Destination = new Destination
+                var request = new SendEmailRequest
                 {
-                    ToAddresses = new List<string> { to }
-                },
-                Message = new Message
-                {
-                    Subject = new Content("Bem-vindo"),
-                    Body = new Body
+                    Destination = new Destination
                     {
-                        Text = new Content($"Olá {name}, bem-vindo!")
-                    }
-                },
-                Source = "vitorjosedietrich@gmail.com"
-            };
+                        ToAddresses = new List<string> { to }
+                    },
+                    Message = new Message
+                    {
+                        Subject = new Content("Bem-vindo"),
+                        Body = new Body
+                        {
+                            Text = new Content($"Olá {name}, bem-vindo!")
+                        }
+                    },
+                    Source = "vitorjosedietrich@gmail.com"
+                };
 
-            await _ses.SendEmailAsync(request);
+                await _ses.SendEmailAsync(request);
+            }
+            catch (AmazonSimpleEmailServiceException ex)
+            {
+                Console.WriteLine($"Erro SES: {ex.Message} / {ex.StatusCode}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro genérico ao enviar email: {ex}");
+                throw;
+            }
         }
     }
 
