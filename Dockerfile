@@ -8,6 +8,10 @@ WORKDIR /src
 COPY  Users.Events.Consumer/Users.Events.Consumer.csproj Users.Events.Consumer/
 COPY  Users.Events.Contracts/Users.Events.Contracts.csproj Users.Events.Contracts/
 
+# Copiar projetos e restaurar dependências
+COPY ["src/Users.Events.Consumer/Users.Events.Consumer.csproj", "src/Users.Events.Consumer/"]
+COPY ["src/Users.Events.Contracts/Users.Events.Contracts.csproj", "src/Users.Events.Contracts/"]
+
 RUN dotnet restore ./src/Users.Events.Consumer/Users.Events.Consumer.csproj
 
 # Copia o resto
