@@ -9,7 +9,7 @@ COPY src/Users.Events.Consumer/Users.Events.Consumer.csproj Users.Events.Consume
 COPY src/Users.Events.Contracts/Users.Events.Contracts.csproj Users.Events.Contracts/
 
 # Restore (PATH CORRETO)
-RUN dotnet restore Users.Events.Consumer/Users.Events.Consumer.csproj
+RUN dotnet restore src/Users.Events.Consumer/Users.Events.Consumer.csproj
 
 # Copia o restante do código
 COPY src/Users.Events.Consumer/ Users.Events.Consumer/
