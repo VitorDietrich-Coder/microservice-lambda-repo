@@ -18,7 +18,7 @@ O **FGC** simula uma **loja virtual de jogos digitais** com recursos completos d
 
 ## ⚙️ Tecnologias Utilizadas
 
-- [.NET 8 (C#)](https://learn.microsoft.com/en-us/dotnet/)
+- [.NET 9 (C#)](https://learn.microsoft.com/en-us/dotnet/)
 - [Entity Framework Core](https://learn.microsoft.com/en-us/ef/core/)
 - [SQL Server](https://www.microsoft.com/en-us/sql-server/)
 - [JWT Bearer Authentication](https://jwt.io/)
