@@ -10,6 +10,8 @@ namespace Users.Events.Contracts.Events
     public record UserCreatedEvent(
        Guid UserId,
        string Name,
-       string Email
+       string Email,
+       string username,
+       string typeuser
    ) : IntegrationEvent;
 }

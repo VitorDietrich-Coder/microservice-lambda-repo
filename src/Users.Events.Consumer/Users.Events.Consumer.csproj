@@ -8,18 +8,9 @@
 	<GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
 
 </PropertyGroup>
-
- 
-	<ItemGroup>
-	  <None Include="appsettings.json">
-		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None> 
-	</ItemGroup>
-
   <ItemGroup>
   
     <PackageReference Include="Amazon.Lambda.Core" Version="2.2.0" />
-  
     <PackageReference Include="Amazon.Lambda.RuntimeSupport" Version="1.8.0" />
     <PackageReference Include="Amazon.Lambda.Serialization.SystemTextJson" Version="2.4.0" />
     <PackageReference Include="Amazon.Lambda.SNSEvents" Version="2.1.0" />
