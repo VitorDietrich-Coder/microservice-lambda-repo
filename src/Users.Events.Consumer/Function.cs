@@ -43,6 +43,8 @@ public class Function
                     context.Logger.LogWarning($"Mensagem SNS nula ou inválida: {record.Sns.Message}");
                     continue;
                 }
+                context.Logger.LogWarning($"Depois: {evt.Email}, {evt.Name}");
+
                 await _emailService.SendAsync(evt.Email, evt.Name);
                 context.Logger.LogInformation($"Email enviado para {evt.Email}");
          
