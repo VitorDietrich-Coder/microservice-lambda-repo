@@ -1,11 +1,10 @@
 # =========================
 # STAGE 1 - BUILD
 # =========================
-FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 # Copia csproj e restaura
-# Copiar projetos e restaurar dependências
 COPY ["src/Users.Events.Consumer/Users.Events.Consumer.csproj", "src/Users.Events.Consumer/"]
 COPY ["src/Users.Events.Contracts/Users.Events.Contracts.csproj", "src/Users.Events.Contracts/"]
 
