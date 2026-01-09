@@ -4,10 +4,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# ---- NuGet (IMPORTANTE) ----
-# Copia nuget.config se existir (feeds privados, GitHub Packages, etc)
-COPY nuget.config ./
-
+ 
 
 # ---- Copia SOMENTE os csproj (para cache de restore) ----
 COPY src/Users.Events.Consumer/Users.Events.Consumer.csproj src/Users.Events.Consumer/
