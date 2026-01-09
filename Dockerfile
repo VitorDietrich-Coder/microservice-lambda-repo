@@ -8,7 +8,7 @@ WORKDIR /src
 COPY src/Users.Events.Consumer/Users.Events.Consumer.csproj Users.Events.Consumer/
 COPY src/Users.Events.Contracts/Users.Events.Contracts.csproj Users.Events.Contracts/
 
-RUN dotnet restore src\Users.Events.Consumer\Users.Events.Consumer.csproj
+RUN dotnet restore ./src/Users.Events.Consumer/Users.Events.Consumer.csproj
 
 # Copia o resto
 COPY . .
