@@ -4,19 +4,23 @@
 FROM mcr.microsoft.com/dotnet/nightly/sdk:9.0 AS build
 WORKDIR /src
 
-# Copia APENAS os csproj (cache correto)
+# Copia csproj
 COPY src/Users.Events.Consumer/Users.Events.Consumer.csproj src/Users.Events.Consumer/
 COPY src/Users.Events.Contracts/Users.Events.Contracts.csproj src/Users.Events.Contracts/
 
-# Restore (AGORA FUNCIONA)
+# Restore
 RUN dotnet restore src/Users.Events.Consumer/Users.Events.Consumer.csproj
 
-# Copia TODO o código
+# Copia o código
 COPY src ./src
 
-# Publish
+# Publish (SEM --no-restore)
 WORKDIR /src/Users.Events.Consumer
-RUN dotnet publish -c Release -o /app/publish --no-restore
+RUN dotnet publish \
+    -c Release \
+    -r linux-x64 \
+    --self-contained false \
+    -o /app/publish
 
 # =========================
 # STAGE 2 - LAMBDA RUNTIME
